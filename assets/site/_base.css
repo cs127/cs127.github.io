@@ -1,0 +1,99 @@
+* {
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 16px;
+    margin: 0px;
+    text-decoration-line: none;
+}
+
+body {
+    padding: 16px;
+    background: #000;
+    color: #aaa;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+abbr {
+    color: #fff;
+}
+
+p {
+    margin-bottom: 16px;
+}
+
+ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+li {
+    padding-left: 1em;
+    text-indent: -1em;
+}
+
+li:before {
+    content: "•";
+    padding-right: 8px;
+}
+
+table, th, td {
+    margin-left:  3px; margin-right:   3px;
+    padding-left: 3px; padding-right:  3px;
+    margin-top:   7px; margin-bottom:  7px;
+    padding-top:  8px; padding-bottom: 8px;
+    border-left: 2px solid; border-right:  2px solid;
+    border-top:  1px solid; border-bottom: 1px solid;
+    border-collapse: collapse;
+    border-color: #fff;
+    vertical-align: top;
+}
+
+th {
+    color: #fff;
+}
+
+@font-face {
+    font-family: vga;
+    src: url(_vga.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: uni;
+    src: url(_uni.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {color:#fff;}
+h2 {color:#ff5;}
+h3 {color:#f55;}
+h4 {color:#a00;}
+a  {color:#f5f;}  a:hover  {color:#a0a;}
+
+.fgc0, a.fgc8:hover {color:#000;} .fgc1, a.fgc9:hover {color:#00a;}
+.fgc2, a.fgca:hover {color:#0a0;} .fgc3, a.fgcb:hover {color:#0aa;}
+.fgc4, a.fgcc:hover {color:#a00;} .fgc5, a.fgcd:hover {color:#a0a;}
+.fgc6, a.fgce:hover {color:#a50;} .fgc7, a.fgcf:hover {color:#aaa;}
+
+.fgc8, a.fgc0:hover {color:#555;} .fgc9, a.fgc1:hover {color:#55f;}
+.fgca, a.fgc2:hover {color:#5f5;} .fgcb, a.fgc3:hover {color:#5ff;}
+.fgcc, a.fgc4:hover {color:#f55;} .fgcd, a.fgc5:hover {color:#f5f;}
+.fgce, a.fgc6:hover {color:#ff5;} .fgcf, a.fgc7:hover {color:#fff;}
+
+.bgc0 {background:#000;} .bgc1 {background:#00a;}
+.bgc2 {background:#0a0;} .bgc3 {background:#0aa;}
+.bgc4 {background:#a00;} .bgc5 {background:#a0a;}
+.bgc6 {background:#a50;} .bgc7 {background:#aaa;}
+
+.bgc8 {background:#555;} .bgc9 {background:#55f;}
+.bgca {background:#5f5;} .bgcb {background:#5ff;}
+.bgcc {background:#f55;} .bgcd {background:#f5f;}
+.bgce {background:#ff5;} .bgcf {background:#fff;}
+
+

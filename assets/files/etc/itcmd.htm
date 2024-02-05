@@ -1,0 +1,792 @@
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8"/>
+        <title>IT effect commands</title>
+        <style>
+            table, th, td {border: 1px solid black; border-collapse: collapse;}
+            th, td {text-align: left; padding: 3px;}
+            .mono {font-family: monospace;}
+            .ws {white-space: pre;}
+            .red {color: red;}
+            .blue {color: blue;}
+            .magenta {color: magenta}
+            .grey {color: grey;}
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1>IT/MPTM effect commands</h1>
+
+        <a href="https://cs127.github.io">cs127</a>
+        <br/>
+        last update: 2024-02-05
+
+        <br/>
+        <br/>
+
+        <table>
+            <tr>
+                <th>byte</th>
+                <th>command</th>
+                <th>subcommand</th>
+                <th>behaviour</th>
+                <th>notes</th>
+                <th>memory</th>
+            </tr>
+            <tr class="grey">
+                <td class="mono">$00</td>
+                <td class="mono ws"> </td>
+                <td><span class="mono ws"> xx</span></td>
+                <td>&mdash;</td>
+                <td>&mdash;</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono">$01</td>
+                <td class="mono">A</td>
+                <td><span class="mono">Axx</span></td>
+                <td>set ticks per row to <span class="mono">$xx</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of parameter <span class="mono">$00</span> is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono">$02</td>
+                <td class="mono">B</td>
+                <td><span class="mono">Bxx</span></td>
+                <td>jump to order <span class="mono">$xx</span>.</td>
+                <td>
+                    jumps to row 0 by default, but can be used alongside <span class="mono">Cxx</span> to specify a different row.<br/>
+                    <span class="red">OpenMPT: can be followed by <span class="mono">#xx</span> for extra digits.</span>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono">$03</td>
+                <td class="mono">C</td>
+                <td><span class="mono">Cxx</span></td>
+                <td>jump to row <span class="mono">$xx</span>.</td>
+                <td>
+                    jumps to the next order by default, but can be used alongside <span class="mono">Bxx</span> to specify a different order.<br/>
+                    <span class="red">OpenMPT: can be followed by <span class="mono">#xx</span> for extra digits.</span>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="4">$04</td>
+                <td class="mono" rowspan="4">D</td>
+                <td><span class="mono">D0x</span></td>
+                <td>slide note volume down by <span class="mono">$x</span> (coarse).</td>
+                <td rowspan="4">
+                    <span class="blue">
+                        if neither of the digits are <span class="mono">$0</span> or <span class="mono">$F</span>, the behaviour is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td rowspan="4"><span class="mono">D</span> (<span class="mono">D</span>, <span class="mono">K</span>, <span class="mono">L</span>)</td>
+            </tr>
+            <tr>
+                <td><span class="mono">Dx0</span></td>
+                <td>slide note volume up by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">DFx</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$F</span></td>
+                <td>slide note volume down by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">DxF</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span></td>
+                <td>slide note volume up by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="3">$05</td>
+                <td class="mono" rowspan="3">E</td>
+                <td><span class="mono">Exx</span>, <span class="mono">$xx</span> &lt; <span class="mono">$E0</span></td>
+                <td>slide note pitch down by <span class="mono">$xx</span> (coarse).</td>
+                <td rowspan="3">&mdash;</td>
+                <td rowspan="3"><span class="mono">E</span>, <span class="mono">F</span>, <span class="mono">G</span></td>
+            </tr>
+            <tr>
+                <td><span class="mono">EEx</span></td>
+                <td>slide note pitch down by <span class="mono">$x</span> (extra fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">EFx</span></td>
+                <td>slide note pitch down by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="3">$06</td>
+                <td class="mono" rowspan="3">F</td>
+                <td><span class="mono">Fxx</span>, <span class="mono">$xx</span> &lt; <span class="mono">$E0</span></td>
+                <td>slide note pitch up by <span class="mono">$xx</span> (coarse).</td>
+                <td rowspan="3">&mdash;</td>
+                <td rowspan="3"><span class="mono">E</span>, <span class="mono">F</span>, <span class="mono">G</span></td>
+            </tr>
+            <tr>
+                <td><span class="mono">FEx</span></td>
+                <td>slide note pitch up by <span class="mono">$x</span> (extra fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">FFx</span></td>
+                <td>slide note pitch up by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono">$07</td>
+                <td class="mono">G</td>
+                <td><span class="mono">Gxx</span></td>
+                <td>portamento with speed <span class="mono">$xx</span>.</td>
+                <td>&mdash;</td>
+                <td><span class="mono">E</span>, <span class="mono">F</span>, <span class="mono">G</span></td>
+            </tr>
+            <tr>
+                <td class="mono">$08</td>
+                <td class="mono">H</td>
+                <td><span class="mono">Hxy</span></td>
+                <td>vibrato (pitch oscillation) with speed <span class="mono">$x</span> and depth <span class="mono">$y</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of only one parameter being <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to use memory for each parameter that is set to <span class="mono">$0</span>.
+                    </span>
+                </td>
+                <td><span class="mono">H</span> (<span class="mono">H</span>, <span class="mono">U</span>)</td>
+            </tr>
+            <tr>
+                <td class="mono">$09</td>
+                <td class="mono">I</td>
+                <td><span class="mono">Ixy</span></td>
+                <td>tremor (toggle sample) on for <span class="mono">$x</span> ticks and off for <span class="mono">$y</span> ticks.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of only one parameter being <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to treat <span class="mono">$0</span> as <span class="mono">$1</span>, unless both parameters are <span class="mono">$0</span>.
+                    </span>
+                </td>
+                <td><span class="mono">I</span></td>
+            </tr>
+            <tr>
+                <td class="mono">$0A</td>
+                <td class="mono">J</td>
+                <td><span class="mono">Jxy</span></td>
+                <td>arpeggio with the notes being root, root+<span class="mono">$x</span>, and root+<span class="mono">$y</span>.</td>
+                <td>&mdash;</td>
+                <td><span class="mono">J</span></td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="4">$0B</td>
+                <td class="mono" rowspan="4">K</td>
+                <td><span class="mono">K0x</span></td>
+                <td>repeat previous vibrato + slide note volume down by <span class="mono">$x</span> (coarse).</td>
+                <td rowspan="4">
+                    <span class="blue">
+                        if neither of the digits are <span class="mono">$0</span> or <span class="mono">$F</span>, the behaviour is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td rowspan="4"><span class="mono">K</span> (<span class="mono">D</span>, <span class="mono">K</span>, <span class="mono">L</span>)</td>
+            </tr>
+            <tr>
+                <td><span class="mono">Kx0</span></td>
+                <td>repeat previous vibrato + slide note volume up by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">KFx</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$F</span></td>
+                <td>repeat previous vibrato + slide note volume down by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">KxF</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span></td>
+                <td>repeat previous vibrato + slide note volume up by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="4">$0C</td>
+                <td class="mono" rowspan="4">L</td>
+                <td><span class="mono">L0x</span></td>
+                <td>repeat previous portamento + slide note volume down by <span class="mono">$x</span> (coarse).</td>
+                <<td rowspan="4">
+                    <span class="blue">
+                        if neither of the digits are <span class="mono">$0</span> or <span class="mono">$F</span>, the behaviour is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td rowspan="4"><span class="mono">L</span> (<span class="mono">D</span>, <span class="mono">K</span>, <span class="mono">L</span>)</td>
+            </tr>
+            <tr>
+                <td><span class="mono">Lx0</span></td>
+                <td>repeat previous portamento + slide note volume up by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">LFx</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$F</span></td>
+                <td>repeat previous portamento + slide note volume down by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">LxF</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span></td>
+                <td>repeat previous portamento + slide note volume up by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono">$0D</td>
+                <td class="mono">M</td>
+                <td><span class="mono">Mxx</span></td>
+                <td>set channel volume to <span class="mono">$xx</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of parameters &gt; <span class="mono">$40</span> is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="4">$0E</td>
+                <td class="mono" rowspan="4">N</td>
+                <td><span class="mono">N0x</span></td>
+                <td>slide channel volume down by <span class="mono">$x</span> (coarse).</td>
+                <td rowspan="4">
+                    <span class="blue">
+                        if neither of the digits are <span class="mono">$0</span> or <span class="mono">$F</span>, the behaviour is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td rowspan="4"><span class="mono">N</span></td>
+            </tr>
+            <tr>
+                <td><span class="mono">Nx0</span></td>
+                <td>slide channel volume up by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">NFx</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$F</span></td>
+                <td>slide channel volume down by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">NxF</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span></td>
+                <td>slide channel volume up by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono">$0F</td>
+                <td class="mono">O</td>
+                <td><span class="mono">Oxx</span></td>
+                <td>start playing sample from offset <span class="mono">$xx00</span>.</td>
+                <td>
+                    usage after <span class="mono">SAy</span> sets the offset to <span class="mono">$yxx00</span>.<br/>
+                    <span class="blue">
+                        behaviour of parameter <span class="mono">$00</span> is often undefined if <span class="mono">$y</span> is nonzero.<br/>
+                        standard behaviour is to disable memory, simply setting the offset to <span class="mono">$y0000</span>.<br/>
+                    </span>
+                    <span class="red">OpenMPT: can be followed by <span class="mono">#xx</span> for extra digits.</span>
+                </td>
+                <td><span class="mono">O</span></td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="4">$10</td>
+                <td class="mono" rowspan="4">P</td>
+                <td><span class="mono">P0x</span></td>
+                <td>slide channel panning right by <span class="mono">$x</span> (coarse).</td>
+                <td rowspan="4">
+                    <span class="blue">
+                        if neither of the digits are <span class="mono">$0</span> or <span class="mono">$F</span>, the behaviour is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td rowspan="4"><span class="mono">P</span></td>
+            </tr>
+            <tr>
+                <td><span class="mono">Px0</span></td>
+                <td>slide channel panning left by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">PFx</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$F</span></td>
+                <td>slide channel panning right by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">PxF</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span></td>
+                <td>slide channel panning left by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono">$11</td>
+                <td class="mono">Q</td>
+                <td><span class="mono">Qxy</span></span>
+                <td>
+                    retrigger note every <span class="mono">$y</span> ticks with a volume change depending on <span class="mono">$x</span>:
+                    <ul>
+                        <li class="blue"><span class="mono">$0</span>: no change</li>
+                        <li><span class="mono">$1</span>: -1</li>
+                        <li><span class="mono">$2</span>: -2</li>
+                        <li><span class="mono">$3</span>: -4</li>
+                        <li><span class="mono">$4</span>: -8</li>
+                        <li><span class="mono">$5</span>: -16</li>
+                        <li><span class="mono">$6</span>: *2/3</li>
+                        <li><span class="mono">$7</span>: *1/2</li>
+                        <li class="blue"><span class="mono">$8</span>: no change</li>
+                        <li><span class="mono">$9</span>: -1</li>
+                        <li><span class="mono">$A</span>: -2</li>
+                        <li><span class="mono">$B</span>: -4</li>
+                        <li><span class="mono">$C</span>: -8</li>
+                        <li><span class="mono">$D</span>: -16</li>
+                        <li><span class="mono">$E</span>: *3/2</li>
+                        <li><span class="mono">$F</span>: *2</li>
+                    </ul>
+                </td>
+                <td>
+                    <span class="blue">
+                        behaviour of either parameter being set to <span class="mono">$0</span>, or <span class="mono">$x</span> being set to <span class="mono">$8</span> is often undefined.<br/>
+                        standard behaviour is to use memory if both parameters are <span class="mono">$0</span>,<br/>
+                        treat <span class="mono">$y</span> as <span class="mono">$1</span> if only <span class="mono">$y</span> is set to <span class="mono">$0</span>,<br/>
+                        and simply not change the volume if <span class="mono">$x</span> is set to <span class="mono">$0</span> or <span class="mono">$8</span>.
+                    </span>
+                </td>
+                <td><span class="mono blue">Q</span></td>
+            </tr>
+            <tr>
+                <td class="mono">$12</td>
+                <td class="mono">R</td>
+                <td><span class="mono">Rxy</span></td>
+                <td>tremolo (volume oscillation) with speed <span class="mono">$x</span> and depth <span class="mono">$y</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of only one parameter being <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to use memory for each parameter that is set to <span class="mono">$0</span>.
+                    </span>
+                </td>
+                <td><span class="mono">R</span></td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="44">$13</td>
+                <td class="mono" rowspan="44">S</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S0x</span></td>
+                <td>&mdash;</td>
+                <td>sometimes defined as the Amiga's <span class="mono">E0x</span> command (set resampler).</td>
+                <td rowspan="43"><span class="mono">S</span></td>
+            </tr>
+            <tr>
+                <td><span class="mono">S10</span></td>
+                <td>set portamento mode to smooth (default).</td>
+                <td rowspan="2">not widely supported. only provided for backwards compatibility.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S1x</span>, <span class="mono">$x</span> &gt; <span class="mono">$0</span></td>
+                <td>set portamento mode to chromatic glissando (snap to nearest notes).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S2x</span></td>
+                <td>set sample finetune (relative to 8363 Hz). parameter is in offset binary.</td>
+                <td>
+                    not widely supported. only provided for backwards compatibility. use <span class="mono">EFx</span>, <span class="mono">FFx</span>, <span class="mono">EEx</span>, or <span class="mono">FEx</span> instead.<br/>
+                    sometimes defined as a one-digit version of XM's <span class="mono">Wxx</span> command (sync event).<br/>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">S3x</span></td>
+                <td>
+                    set vibrato (pitch oscillation) waveform depending on <span class="mono">$x</span>:
+                    <ul>
+                        <li><span class="mono">$0</span>: sine (default)</li>
+                        <li><span class="mono">$1</span>: downwards saw</li>
+                        <li><span class="mono">$2</span>: square</li>
+                        <li><span class="mono">$3</span>: random/noise</li>
+                    </ul>
+                </td>
+                <td rowspan="3">
+                    <span class="blue">
+                        behaviour of parameters &gt; <span class="mono">$3</span> is undefined.<br/>
+                        standard behaviour is to act like <span class="mono">$0</span> (set the waveform to sine).
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">S4x</span></td>
+                <td>
+                    set tremolo (volume oscillation) waveform depending on <span class="mono">$x</span>:
+                    <ul>
+                        <li><span class="mono">$0</span>: sine (default)</li>
+                        <li><span class="mono">$1</span>: downwards saw</li>
+                        <li><span class="mono">$2</span>: square</li>
+                        <li><span class="mono">$3</span>: random/noise</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">S5x</span></td>
+                <td>
+                    set panbrello (panning oscillation) waveform depending on <span class="mono">$x</span>:
+                    <ul>
+                        <li><span class="mono">$0</span>: sine (default)</li>
+                        <li><span class="mono">$1</span>: downwards saw</li>
+                        <li><span class="mono">$2</span>: square</li>
+                        <li><span class="mono">$3</span>: random/noise</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">S6x</span></td>
+                <td>extend row by <span class="mono">$x</span> ticks.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of multiple instances (and/or <span class="mono">SEx</span>) on the same row is often undefined.<br/>
+                        standard behaviour is to stack the <span class="mono">S6x</span> effects together, and only use the leftmost <span class="mono">SEx</span> effect.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">S70</span></td>
+                <td>cut all background notes on the channel.</td>
+                <td rowspan="13">&mdash;</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S71</span></td>
+                <td>release all background notes on the channel.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S72</span></td>
+                <td>fade out all background notes on the channel.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S73</span></td>
+                <td>set NNA of current note to cut.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S74</span></td>
+                <td>set NNA of current note to continue.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S75</span></td>
+                <td>set NNA of current note to release.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S76</span></td>
+                <td>set NNA of current note to fade.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S77</span></td>
+                <td>disable volume envelope for the current note.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S78</span></td>
+                <td>enable volume envelope for the current note.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S79</span></td>
+                <td>disable panning envelope for the current note.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S7A</span></td>
+                <td>enable panning envelope for the current note.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S7B</span></td>
+                <td>disable pitch/filter envelope for the current note.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S7C</span></td>
+                <td>enable pitch/filter envelope for the current note.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S7D</span></td>
+                <td>force pitch/filter envelope to act as pitch envelope for the current note.</td>
+                <td rowspan="2">OpenMPT only.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S7E</span></td>
+                <td>force pitch/filter envelope to act as filter envelope for the current note.</td>
+            </tr>
+            <tr class="grey">
+                <td><span class="mono">S7F</span></td>
+                <td>&mdash;</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S8x</span></td>
+                <td>set channel panning to <span class="mono">$x</span> (<span class="mono">$0</span> = left, <span class="mono">$F</span> = right).</td>
+                <td>same as <span class="mono">Xxx</span> but with one digit of precision.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S90</span></td>
+                <td>disable surround panning for the channel.</td>
+                <td>OpenMPT only.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">S91</span></td>
+                <td>enable surround panning for the channel.</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr class="grey">
+                <td><span class="mono">S9x</span>, <span class="mono">$1</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$8</span></td>
+                <td>&mdash;</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S98</span></td>
+                <td>disable channel reverb.</td>
+                <td rowspan="2">
+                    OpenMPT only.<br/>
+                    not recommended. use reverb plugins instead.
+                </td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S99</span></td>
+                <td>enable channel reverb.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S9A</span></td>
+                <td>set channel surround mode to centre (default).</td>
+                <td rowspan="6">OpenMPT only.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S9B</span></td>
+                <td>set channel surround mode to pannable.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S9C</span></td>
+                <td>set channel filter mode to global (default).</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S9D</span></td>
+                <td>set channel filter mode to per-note.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S9E</span></td>
+                <td>play current sample forwards.</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">S9F</span></td>
+                <td>play current sample backwards.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">SAx</span></td>
+                <td>set a higher digit for subsequent sample offset commands to <span class="mono">$x</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of <span class="mono">O00</span> is often undefined if <span class="mono">$x</span> is nonzero.<br/>
+                        standard behaviour is to disable memory, simply setting the offset to <span class="mono">$x0000</span>.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">SB0</span></td>
+                <td>mark the start of a pattern loop.</td>
+                <td rowspan="2">&mdash;</td>
+            </tr>
+            <tr>
+                <td><span class="mono">SBx</span>, <span class="mono">$x</span> &gt; <span class="mono">$0</span></td>
+                <td>jump to the start of the pattern loop until <span class="mono">$x</span> jumps have occured.</td>
+            </tr>
+            <tr>
+                <td><span class="mono">SCx</span></td>
+                <td>cut the current note after <span class="mono">$x</span> ticks.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of parameter <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to treat <span class="mono">$0</span> as <span class="mono">$1</span>.<br/>
+                    </span>
+                    <span class="blue">
+                        behaviour of parameters &ge; ticks per row is often undefined.<br/>
+                        standard behaviour is to not cut the note at all.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">SDx</span></td>
+                <td>delay the current note by <span class="mono">$x</span> ticks.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of parameter <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to treat <span class="mono">$0</span> as <span class="mono">$1</span>.<br/>
+                    </span>
+                    <span class="blue">
+                        behaviour of parameters &ge; ticks per row is often undefined.<br/>
+                        standard behaviour is to not play the note at all.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">SEx</span></td>
+                <td>repeat the current row (without replaying notes) <span class="mono">$x</span> times.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of multiple instances (and/or <span class="mono">S6x</span>) on the same row is often undefined.<br/>
+                        standard behaviour is to stack the <span class="mono">S6x</span> effects together, and only use the leftmost <span class="mono">SEx</span> effect.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="mono">SFx</span></td>
+                <td>set parametered macro bank to <span class="mono">$x</span> for the channel.</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="3">$14</td>
+                <td class="mono" rowspan="3">T</td>
+                <td><span class="mono">T0x</span></td>
+                <td>slide tempo down by <span class="mono">$x</span> (coarse).</td>
+                <td rowspan="2">&mdash;</td>
+                <td rowspan="3"><span class="mono">T0</span> (global), <span class="mono">T1</span> (global)</td>
+            </tr>
+            <tr>
+                <td><span class="mono">T1x</span></td>
+                <td>slide tempo up by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">Txx</span>, <span class="mono">$xx</span> &ge; <span class="mono">$20</span></td>
+                <td>set tempo to <span class="mono">$xx</span>.</td>
+                <td><span class="red">OpenMPT: can be followed by <span class="mono">#xx</span> for extra digits.</span></td>
+            </tr>
+            <tr>
+                <td class="mono">$15</td>
+                <td class="mono">U</td>
+                <td><span class="mono">Uxy</span></td>
+                <td>vibrato (pitch oscillation) with speed <span class="mono">$x</span> and depth <span class="mono">$y</span>/4.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of only one parameter being <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to use memory for each parameter that is set to <span class="mono">$0</span>.
+                    </span>
+                </td>
+                <td><span class="mono">H</span> (<span class="mono">H</span>, <span class="mono">U</span>)</td>
+            </tr>
+            <tr>
+                <td class="mono">$16</td>
+                <td class="mono">V</td>
+                <td><span class="mono">Vxx</span></td>
+                <td>set global volume to <span class="mono">$xx</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of parameters &gt; <span class="mono">$80</span> is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="4">$17</td>
+                <td class="mono" rowspan="4">W</td>
+                <td><span class="mono">W0x</span></td>
+                <td>slide global volume down by <span class="mono">$x</span> (coarse).</td>
+                <td rowspan="4">
+                    <span class="blue">
+                        if neither of the digits are <span class="mono">$0</span> or <span class="mono">$F</span>, the behaviour is undefined.<br/>
+                        standard behaviour is to do nothing.
+                    </span>
+                </td>
+                <td rowspan="4"><span class="mono">W</span> (global)</td>
+            </tr>
+            <tr>
+                <td><span class="mono">Wx0</span></td>
+                <td>slide global volume up by <span class="mono">$x</span> (coarse).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">WFx</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span> &lt; <span class="mono">$F</span></td>
+                <td>slide global volume down by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td><span class="mono">WxF</span>, <span class="mono">$0</span> &lt; <span class="mono">$x</span></td>
+                <td>slide global volume up by <span class="mono">$x</span> (fine).</td>
+            </tr>
+            <tr>
+                <td class="mono">$18</td>
+                <td class="mono">X</td>
+                <td><span class="mono">Xxx</span></td>
+                <td>set channel panning to <span class="mono">$xx</span> (<span class="mono">$00</span> = left, <span class="mono">$FF</span> = right).</td>
+                <td>
+                    same as <span class="mono">Xxx</span> but with one digit of precision.
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr>
+                <td class="mono">$19</td>
+                <td class="mono">Y</td>
+                <td><span class="mono">Yxy</span></td>
+                <td>panbrello (panning oscillation) with speed <span class="mono">$x</span> and depth <span class="mono">$y</span>.</td>
+                <td>
+                    <span class="blue">
+                        behaviour of only one parameter being <span class="mono">$0</span> is often undefined.<br/>
+                        standard behaviour is to use memory for each parameter that is set to <span class="mono">$0</span>.
+                    </span>
+                </td>
+                <td><span class="mono">Y</span></td>
+            </tr>
+            <tr>
+                <td class="mono" rowspan="2">$1A</td>
+                <td class="mono" rowspan="2">Z</td>
+                <td><span class="mono">Zxx</span>, <span class="mono">$xx</span> &lt; <span class="mono">$80</span></td>
+                <td>run parametered macro <span class="mono">$xx</span>.</td>
+                <td>bank can be switched for each channel using <span class="mono">SFx</span>.</td>
+                <td rowspan="2">&mdash;</td>
+            </tr>
+            <tr>
+                <td><span class="mono">Zxx</span>, <span class="mono">$xx</span> &ge; <span class="mono">$80</span></td>
+                <td>run fixed macro <span class="mono">$xx</span>.</td>
+                <td>&mdash;</td>
+            </tr>
+            <tr class="red">
+                <td class="mono">$1B</td>
+                <td class="mono">#</td>
+                <td><span class="mono">#xx</span></td>
+                <td>extend the parameter of the command on the previous row.</td>
+                <td>
+                    OpenMPT only.</br>
+                    supports <span class="mono">Bxx</span>, <span class="mono">Cxx</span>, <span class="mono">Oxx</span>, <span class="mono">Txx</span>, <span class="mono">+xx</span>, <span class="mono">*xx</span>, and itself.<br/>
+                    up to three of these commands can be chained, for a total of 8 digits.
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr class="red">
+                <td class="mono" rowspan="2">$1C</td>
+                <td class="mono" rowspan="2">\</td>
+                <td><span class="mono">\xx</span>, <span class="mono">$xx</span> &lt; <span class="mono">$80</span></td>
+                <td>run parametered macro <span class="mono">$xx</span> with parameter interpolation.</td>
+                <td>
+                    OpenMPT only.</br>
+                    bank can be switched for each channel using <span class="mono">SFx</span>.
+                </td>
+                <td rowspan="2">&mdash;</td>
+            </tr>
+            <tr class="red">
+                <td><span class="mono">\xx</span>, <span class="mono">$xx</span> &ge; <span class="mono">$80</span></td>
+                <td>run fixed macro <span class="mono">$xx</span> with parameter interpolation.</td>
+                <td>OpenMPT only.</br></td>
+            </tr>
+            <tr class="red">
+                <td class="mono">$1D</td>
+                <td class="mono">:</td>
+                <td><span class="mono">:xy</span></td>
+                <td>delay the current note by <span class="mono">$x</span> ticks, and cut it after <span class="mono">$y</span> ticks.</td>
+                <td>
+                    OpenMPT only.</br>
+                    <span class="magenta">TODO: undefined behaviour</span>
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr class="red">
+                <td class="mono">$1E</td>
+                <td class="mono">+</td>
+                <td><span class="mono">+xx</span></td>
+                <td>set note finetune. parameter is in offset binary.</td>
+                <td>
+                    OpenMPT only.</br>
+                    can be followed by <span class="mono">#xx</span> for extra digits.
+                </td>
+                <td>&mdash;</td>
+            </tr>
+            <tr class="red">
+                <td class="mono">$1F</td>
+                <td class="mono">*</td>
+                <td><span class="mono">*xx</span></td>
+                <td>set note finetune with interpolation. parameter is in offset binary.</td>
+                <td>
+                    OpenMPT only.</br>
+                    can be followed by <span class="mono">#xx</span> for extra digits.
+                </td>
+                <td>&mdash;</td>
+            </tr>
+        </table>
+
+    </body>
+
+</html>

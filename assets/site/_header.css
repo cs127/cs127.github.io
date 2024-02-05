@@ -1,0 +1,11 @@
+.h1, .h2, .h3, .h4, .h5, .h0
+{white-space:pre;}
+.h1, .h2, .h3, .h4, .h5
+{color:#000;}
+.h1:hover, .h2:hover, .h3:hover, .h4:hover, .h5:hover
+{color:#000;}
+.h1 {background:#f55;} .h1:hover {background:#a00;}
+.h2 {background:#ff5;} .h2:hover {background:#a50;}
+.h3 {background:#5f5;} .h3:hover {background:#0a0;}
+.h4 {background:#5ff;} .h4:hover {background:#0aa;}
+.h5 {background:#55f;} .h5:hover {background:#00a;}
