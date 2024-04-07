@@ -1,0 +1,10 @@
+@import "_base.css";
+
+* {
+    font-family: uni, "Unifont", monospace;
+    direction: ltr;
+}
+
+table, th, td {
+    text-align: left;
+}

@@ -1,0 +1,10 @@
+@import "_base.css";
+
+* {
+    font-family: vga, "PxPlus IBM VGA 8x16", uni, "Unifont", monospace;
+    direction: ltr;
+}
+
+table, th, td {
+    text-align: left;
+}
